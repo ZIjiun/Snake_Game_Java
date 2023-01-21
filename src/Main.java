@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main extends JPanel{
 
@@ -10,18 +12,51 @@ public class Main extends JPanel{
     public static int column = width / CELL_SIZE;
     private Snake snake;
     private Fruit fruit;
+    private Timer t;
+    private int speed = 100;
+    private static String direction;
 
     public Main() {
         snake = new Snake();
         fruit = new Fruit();
+        t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                repaint();
+            }
+        }, 0, speed);
+        direction = "Right";
     }
 
     @Override
     public void paintComponent(Graphics g) {
+//        System.out.println("We are calling paint component...");
         // draw a black background
         g.fillRect(0, 0, width, height);
         snake.drawSnake(g);
         fruit.drawFruit(g);
+
+        //remove snake tail and put it in head
+        int snakeX = snake.getSnakeBody().get(0).x;
+        int snakeY = snake.getSnakeBody().get(0).y;
+//        System.out.println("x= "+ snakeX + ", y= " +snakeY);
+        // right, x += cell_size
+        // left, x -= cell_size
+        // down, y += cell_size
+        // up, y -= cell_size
+        if (direction.equals("Left")) {
+            snakeX -= CELL_SIZE;
+        } else if (direction.equals("Up")) {
+            snakeY -= CELL_SIZE;
+        } else if (direction.equals("Right")) {
+            snakeX += CELL_SIZE;
+        } else if (direction.equals("Down")) {
+            snakeY += CELL_SIZE;
+        }
+        Node newHead = new Node(snakeX, snakeY);
+        snake.getSnakeBody().remove(snake.getSnakeBody().size() -1);
+        snake.getSnakeBody().add(0, newHead);
     }
 
     @Override
