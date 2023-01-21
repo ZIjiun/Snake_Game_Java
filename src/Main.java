@@ -8,8 +8,8 @@ import java.util.TimerTask;
 public class Main extends JPanel implements KeyListener {
 
     public static final int CELL_SIZE = 20;
-    private static int width = 400;
-    private static int height = 400;
+    public static int width = 400;
+    public static int height = 400;
     public static int row = height / CELL_SIZE;
     public static int column = width / CELL_SIZE;
     private Snake snake;
