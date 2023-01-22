@@ -39,8 +39,9 @@ public class Main extends JPanel implements KeyListener {
 //        System.out.println("We are calling paint component...");
         // draw a black background
         g.fillRect(0, 0, width, height);
-        snake.drawSnake(g);
+        // 讓電腦先畫水果再畫蛇，吃到水果的時候就不會水果出現在頭上
         fruit.drawFruit(g);
+        snake.drawSnake(g);
 
         //remove snake tail and put it in head
         int snakeX = snake.getSnakeBody().get(0).x;
@@ -60,7 +61,17 @@ public class Main extends JPanel implements KeyListener {
             snakeY += CELL_SIZE;
         }
         Node newHead = new Node(snakeX, snakeY);
-        snake.getSnakeBody().remove(snake.getSnakeBody().size() -1);
+        // check if the snake eats the fruit
+        if (snake.getSnakeBody().get(0).x == fruit.getX() && snake.getSnakeBody().get(0).y == fruit.getY()){
+            System.out.println("Eating the fruit");
+            // 1. set fruit to a new location
+            fruit.setNewLocation(snake);
+            fruit.drawFruit(g);
+            // 2. draw fruit
+            // 3. socre ++
+        } else {
+            snake.getSnakeBody().remove(snake.getSnakeBody().size() -1);
+        }
         snake.getSnakeBody().add(0, newHead);
 
         allowKeyPress = true;
