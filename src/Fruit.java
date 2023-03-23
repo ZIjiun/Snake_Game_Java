@@ -8,7 +8,7 @@ public class Fruit {
     private ImageIcon img;
 
     public Fruit() {
-        img = new ImageIcon("fruit.png");
+        img = new ImageIcon("C:\\Users\\s4101\\Desktop\\Java_Snake_Game\\Java_Snake_Game\\src\\fruit.png");
         this.x = (int )(Math.floor(Math.random() * Main.column) * Main.CELL_SIZE);
         this.y = (int )(Math.floor(Math.random() * Main.row) * Main.CELL_SIZE);
     }
